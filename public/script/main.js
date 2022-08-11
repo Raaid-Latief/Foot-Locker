@@ -5,7 +5,7 @@ let products = [];
 const userContainer = document.getElementById("users");
 const prodContainer = document.getElementById("products");
 
-fetch('http://foot-locker.herokuapp.com/users')
+fetch('https://foot-locker.herokuapp.com/users')
   .then((res) => res.json())
   .then((data) => {
     users = data;
@@ -35,7 +35,7 @@ function showUsers(users) {
 }
 
 
-fetch('http://foot-locker.herokuapp.com/products')
+fetch('https://foot-locker.herokuapp.com/products')
   .then((res) => res.json())
   .then((data) => {
     items = data;
