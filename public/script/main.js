@@ -5,7 +5,7 @@ let products = [];
 const userContainer = document.getElementById("users");
 const prodContainer = document.getElementById("products");
 
-fetch('http://localhost:6969/users')
+fetch('http://foot-locker.herokuapp.com/users')
   .then((res) => res.json())
   .then((data) => {
     users = data;
@@ -35,7 +35,7 @@ function showUsers(users) {
 }
 
 
-fetch('http://localhost:6969/products')
+fetch('http://foot-locker.herokuapp.com/products')
   .then((res) => res.json())
   .then((data) => {
     items = data;
@@ -68,7 +68,7 @@ function showItems(products) {
 async function Login(e) {
   e.preventDefault();
   const response = await fetch(
-    "https://localhost:6969/users/login",
+    "https://foot-locker.herokuapp.com/users/login",
     {
       method: "POST",
       body: JSON.stringify({

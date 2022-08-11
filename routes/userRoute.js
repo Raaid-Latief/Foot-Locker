@@ -39,7 +39,7 @@ router.post("/", (req, res) => {
     user_id,
     email,
     password,
-    full_name,
+    fullname,
     billing_address,
     default_shipping_address,
     country,
@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
   } = req.body;
   try {
     con.query(
-      `INSERT INTO users (user_id,email,password,full_name,billing_address,default_shipping_address,country,phone,user_type) VALUES ("${user_id}","${email}", "${password}", "${full_name}", "${billing_address}", "${default_shipping_address}", "${country}", "${phone}", "${user_type}")`,
+      `INSERT INTO users (user_id,email,password,fullname,billing_address,default_shipping_address,country,phone,user_type) VALUES ("${user_id}","${email}", "${password}", "${fullname}", "${billing_address}", "${default_shipping_address}", "${country}", "${phone}", "${user_type}")`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -62,7 +62,7 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   const {
     user_id,
-    full_name,
+    fullname,
     email,
     password,
     userRole,
@@ -73,7 +73,7 @@ router.put("/:id", (req, res) => {
   try {
     con.query(
       `UPDATE users
-       SET user_id = "${user_id}", full_name = "${full_name}", email = "${email}", password = "${password}",  userRole = "${userRole}", phoneNumber = "${phoneNumber}", joinDate = "${joinDate}", cart = "${cart}", user_type = "${user_type}"
+       SET user_id = "${user_id}", fullname = "${fullname}", email = "${email}", password = "${password}",  userRole = "${userRole}", phoneNumber = "${phoneNumber}", joinDate = "${joinDate}", cart = "${cart}", user_type = "${user_type}"
        WHERE user_id=${req.params.id}`,
       (err, result) => {
         if (err) throw err;
@@ -107,7 +107,7 @@ router.post("/register", (req, res) => {
     let sql = "INSERT INTO users SET ?";
     const {
       user_id,
-      full_name,
+      fullname,
       email,
       password,
       userRole,
@@ -122,7 +122,7 @@ router.post("/register", (req, res) => {
 
     let user = {
       user_id,
-      full_name,
+      fullname,
       email,
       //Sending the has value to be stored within the table
       password: hash,
@@ -135,7 +135,7 @@ router.post("/register", (req, res) => {
     con.query(sql, user, (err, result) => {
       if (err) throw err;
       console.log(result);
-      res.send(`User ${(user.full_name, user.email)} created Successfully`);
+      res.send(`User ${(user.fullname, user.email)} created Successfully`);
     });
   } catch (error) {
     console.log(error);
@@ -161,6 +161,18 @@ router.post("/login", (req, res) => {
           result[0].password
         );
 
+
+
+      //   user_id,
+      //   fullname,
+      //   email,
+      //   //Sending the has value to be stored within the table
+      //   password: hash,
+      //   userRole,
+      //   phoneNumber,
+      //   joinDate,
+      //   cart,
+      // };
         //If the password does not match
         if (!isMatch) {
           res.send("Password is Incorrect");
@@ -168,13 +180,13 @@ router.post("/login", (req, res) => {
           const payload = {
             user: {
               user_id: result[0].user_id,
-              full_name: result[0].full_name,
+              fullname: result[0].fullname,
               email: result[0].email,
-              user_type: result[0].user_type,
-              phone: result[0].phone,
-              country: result[0].country,
-              billing_address: result[0].billing_address,
-              default_shipping_address: result[0].default_shipping_address,
+              password: result[0].password,
+              userRole: result[0].userRole,
+              phoneNumber: result[0].phoneNumber,
+              joinDate: result[0].joinDate,
+              cart: result[0].cart,
             },
           };
           //Creating a token and setting an expiry date
@@ -261,7 +273,7 @@ router.get("/", middleware, (req, res) => {
       //   subject: 'Password Reset',
       //   html:
       //     `<div>
-      //       <h3>Hi ${result[0].full_name},</h3>
+      //       <h3>Hi ${result[0].fullname},</h3>
       //       <br>
       //       <h4>Click link below to reset your password</h4>
       //       <a href="https://user-images.githubusercontent.com/4998145/52377595-605e4400-2a33-11e9-80f1-c9f61b163c6a.png">
@@ -322,13 +334,14 @@ router.put('reset-psw/:id', (req, res) => {
       const hash = bcrypt.hashSync(req.body.password, salt);
 
       const updatedPassword = {
-        full_name: result[0].full_name,
+        user_id: result[0].user_id,
+        fullname: result[0].fullname,
         email: result[0].email,
-        user_type: result[0].user_type,
-        phone: result[0].phone,
-        country: result[0].country,
-        billing_address: result[0].billing_address,
-        default_shipping_address: result[0].default_shipping_address,
+        password: result[0].password,
+        userRole: result[0].userRole,
+        phoneNumber: result[0].phoneNumber,
+        joinDate: result[0].joinDate,
+        cart: result[0].cart,
 
         // Only thing im changing in table
         password: hash,
