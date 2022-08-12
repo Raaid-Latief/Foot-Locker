@@ -21,12 +21,12 @@ function showUsers(users) {
         <div id="users" clas="w-100">
             <div class='text-center'>
                 <h2 id="userId" class="text-muted">${user.user_id}</h2>
-                <h4 id="userFullName">${user.full_name}</h4>
-                <p id="userBillingAddress">Billing Address: ${user.billing_address}</p>
-                <p id="userDefaultShippingAddress">Shipping Address: ${user.default_shipping_address}</p>
-                <p id="userCountry">Country: ${user.country}</p>
-                <p id="userPhone">Phone: ${user.phone}</p>
-                <p id="userType">User Type: ${user.user_type}</p>
+                <h4 id="userFullName">${user.fullname}</h4>
+                <p id="userBillingAddress">Billing Address: ${user.email}</p>
+                <p id="userDefaultShippingAddress">Shipping Address: ${user.password}</p>
+                <p id="userCountry">Country: ${user.userRole}</p>
+                <p id="userPhone">Phone: ${user.phoneNumber}</p>
+                <p id="userType">User Type: ${user.joinDate}</p>
             </div>
         </div>
     </div>
