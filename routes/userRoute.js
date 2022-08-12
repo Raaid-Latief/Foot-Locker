@@ -37,18 +37,17 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   const {
     user_id,
+    fullname,
     email,
     password,
-    fullname,
-    billing_address,
-    default_shipping_address,
-    country,
-    phone,
-    user_type,
+    userRole,
+   phoneNumber,
+   joinDate,
+   cart,
   } = req.body;
   try {
     con.query(
-      `INSERT INTO users (user_id,email,password,fullname,billing_address,default_shipping_address,country,phone,user_type) VALUES ("${user_id}","${email}", "${password}", "${fullname}", "${billing_address}", "${default_shipping_address}", "${country}", "${phone}", "${user_type}")`,
+      `INSERT INTO users (user_id,email,password,fullname,userRole,phoneNumber,joinDate,cart) VALUES ("${user_id}","${email}", "${password}", "${fullname}", "${userRole}", "${phoneNumber}", "${joinDate}", "${cart}")`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -113,7 +112,7 @@ router.post("/register", (req, res) => {
       userRole,
      phoneNumber,
      joinDate,
-     cart,
+     
     } = req.body;
 
     //Start of Hashing/Encryption
@@ -124,12 +123,11 @@ router.post("/register", (req, res) => {
       user_id,
       fullname,
       email,
-      //Sending the has value to be stored within the table
+      //Sending the hash value to be stored within the table
       password: hash,
       userRole,
       phoneNumber,
       joinDate,
-      cart,
     };
     
     con.query(sql, user, (err, result) => {
