@@ -58,9 +58,12 @@ router.post("/", (req, res) => {
     res.status(400).send(error);
   }
 });
+
+
+// UPDATE
 router.put("/:id", (req, res) => {
   const {
-    user_id,
+   
     fullname,
     email,
     password,
@@ -72,7 +75,7 @@ router.put("/:id", (req, res) => {
   try {
     con.query(
       `UPDATE users
-       SET user_id = "${user_id}", fullname = "${fullname}", email = "${email}", password = "${password}",  userRole = "${userRole}", phoneNumber = "${phoneNumber}", joinDate = "${joinDate}", cart = "${cart}", user_type = "${user_type}"
+       SET  fullname = "${fullname}", email = "${email}", password = "${password}",  userRole = "${userRole}", phoneNumber = "${phoneNumber}", joinDate = "${joinDate}", cart = "${cart}", user_type = "${user_type}"
        WHERE user_id=${req.params.id}`,
       (err, result) => {
         if (err) throw err;
